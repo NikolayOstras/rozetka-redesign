@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  body {
+    @apply flex min-h-screen flex-col text-mainColor;
+  }
+}
+.container {
+  @apply mx-auto max-w-7xl px-3;
+}
+
+.page {
+  @apply flex-grow;
+}
+
+.nav-item {
+  @apply flex items-center gap-2 hover:bg-black/10 transition-colors p-2 rounded-md;
+}
+
+.header {
+  @apply py-2 flex justify-between items-center;
+}
+
+.nav-dropdown-item {
+  @apply hover:bg-black/10 transition-colors p-2 rounded-md cursor-pointer;
+}
