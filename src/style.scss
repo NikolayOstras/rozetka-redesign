@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+	html , body {
+		@apply h-full;
+	}
 	body {
-		@apply flex min-h-screen flex-col text-mainColor;
+		@apply flex flex-col;
 
 	}
 }
@@ -19,4 +22,4 @@
 
 // imports
 
-@import './components/header/index';
+// @import './components/header/index';
