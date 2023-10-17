@@ -1,25 +1,27 @@
 <section class=" bg-gray-50 flex flex-col overflow-x-hidden">
-	<div class="swiper main-slider w-full">
-		<div class="swiper-wrapper py-4">
-			@@include('./components/slide/index.html',{
-			"title":"Елегантість часу",
-			"img":"https://unsplash.com/photos/2cFZ_FB08UM/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTQ4MTkxfA&force=true&w=1920",
-			"price": "50$",
-			"description": "Чудові часи, що поєднують стиль та функціональність, роблять додатковий акцент на вашому образі."
-			})
-			@@include('./components/slide/index.html',{
-			"title":"Літній стиль",
-			"img":"https://unsplash.com/photos/K62u25Jk6vo/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTQ3OTQyfA&force=true&w=1920",
-			"price": "30$",
-			"description": "Захист від сонця з неперевершеним стилем та комфортом."
-			})
-			@@include('./components/slide/index.html',{
-			"title":"Сяючий поцілунок",
-			"img":"https://unsplash.com/photos/E1rH__X9SA0/download?force=true&w=1920",
-			"price": "20.50$",
-			"description": "Збережіть ваші губи чарівно привабливими з нашою губною помадою вишуканого кольору."
-			})
+	<div class="container">
+		<div class="swiper main-slider w-full">
+			<div class="swiper-wrapper py-4">
+				@@include('./components/slide/index.html',{
+				"title":"Елегантість часу",
+				"img":"https://unsplash.com/photos/2cFZ_FB08UM/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTQ4MTkxfA&force=true&w=1920",
+				"price": "50$",
+				"description": "Чудові часи, що поєднують стиль та функціональність, роблять додатковий акцент на вашому образі"
+				})
+				@@include('./components/slide/index.html',{
+				"title":"Літній стиль",
+				"img":"https://unsplash.com/photos/K62u25Jk6vo/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTQ3OTQyfA&force=true&w=1920",
+				"price": "30$",
+				"description": "Захист від сонця з неперевершеним стилем та комфортом."
+				})
+				@@include('./components/slide/index.html',{
+				"title":"Сяючий поцілунок",
+				"img":"https://unsplash.com/photos/E1rH__X9SA0/download?force=true&w=1920",
+				"price": "20.50$",
+				"description": "Збережіть ваші губи чарівно привабливими з нашою губною помадою вишуканого кольору."
+				})
+			</div>
 		</div>
+		<div class="main-slider-pagination !w-fit mx-auto py-6 relative z-1"></div>
 	</div>
-	<div class="main-slider-pagination !w-fit mx-auto py-6 relative z-1"></div>
 </section>
