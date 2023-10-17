@@ -8,10 +8,11 @@
 		"gulp-esbuild": "^0.10.6",
 		"gulp-file-include": "^2.3.0",
 		"gulp-notify": "^4.0.0",
-		"gulp-plumber": "^1.2.1"
+		"gulp-plumber": "^1.2.1",
+		"prettier": "^3.0.3"
 	},
 	"dependencies": {
-		"alpinejs": "^3.12.3",
-		"smooth-scrollbar": "^8.8.4"
+		"smooth-scrollbar": "^8.8.4",
+		"swiper": "^10.3.1"
 	}
 }

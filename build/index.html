@@ -4,8 +4,9 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 	<link href="./css/style.css" rel="stylesheet" />
-	<link rel="shortcut icon" type="image/png" href="./assets/images/favicon.png" />
+	<link rel="shortcut icon" type="image/svg" href="./img/socket.svg" />
 	<meta name="theme-color" content="#36A26B">
 	<meta name="msapplication-navbutton-color" content="#36A26B">
 	<meta name="apple-mobile-web-app-status-bar-style" content="#36A26B">
@@ -14,30 +15,40 @@
 	</title>
 </head>
 
-<body >
+<body>
 
-<header class="text-sm">
+<header
+	class="text-sm sm:rounded-t-md fixed top:0 sm:bottom-0 left-0 w-screen bg-white/20 backdrop-blur-3xl sm:p-2 z-2">
 	<div class="container flex items-center py-2">
-		<div class="basis-1/3">
-			<a href="" class="p-2 rounded hover:bg-gray-200 flex items-center w-fit">
+		<div class="basis-1/3 sm:hidden">
+			<a href="" class="p-2 rounded hover:bg-gray-200 flex items-center gap-1 w-fit">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
 					class="w-6 h-6">
 					<path stroke-linecap="round" stroke-linejoin="round"
 						d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122" />
 				</svg>
-				<span>Catalog</span>
+				<span class="lg:hidden">Catalog</span>
 			</a>
 		</div>
-		<a href="#" class="text-2xl font-bold mx-auto hover:underline">Rozetka</a>
-		<div class="ml-auto" x-data="{lang:0}">
-			<button class="p-2 rounded hover:bg-gray-200 transition-colors" :class="lang===0 && 'bg-accent/20'"
-				@click="lang=0">EN</button>
-			<span class="opacity-50">|</span>
-			<button class="p-2 rounded hover:bg-gray-200 transition-colors" :class="lang===1 && 'bg-accent/20'"
-				@click="lang=1">UA</button>
-		</div>
-		<nav class="ml-2">
-			<ul class="flex items-center">
+		<a href="#" class="text-2xl font-bold mx-auto hover:underline lg:hidden">Rozetka</a>
+		<div class="ml-auto sm:hidden">
+	<button class="p-2 rounded hover:bg-gray-200 transition-colors">EN</button>
+	<span class="opacity-50">|</span>
+	<button class="p-2 rounded hover:bg-gray-200 transition-colors">UA</button>
+</div>
+
+		<nav class="ml-2 sm:mx-auto">
+			<ul class="flex items-center md:justify-end sm:justify-between sm:gap-4">
+				<li class="hidden sm:block">
+					<a href="" class="p-2 rounded hover:bg-gray-200 flex items-center gap-1 w-fit">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+							stroke="currentColor" class="w-6 h-6">
+							<path stroke-linecap="round" stroke-linejoin="round"
+								d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122" />
+						</svg>
+						<span class="lg:hidden">Catalog</span>
+					</a>
+				</li>
 				<li>
 					<a href="" class="p-2 rounded hover:bg-gray-200 flex items-center gap-1">
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -45,7 +56,7 @@
 							<path stroke-linecap="round" stroke-linejoin="round"
 								d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
 						</svg>
-						<span>Search</span>
+						<span class="lg:hidden">Search</span>
 					</a>
 				</li>
 				<li>
@@ -55,7 +66,7 @@
 							<path stroke-linecap="round" stroke-linejoin="round"
 								d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
 						</svg>
-						<span>Login</span>
+						<span class="lg:hidden">Login</span>
 					</button>
 				</li>
 				<li>
@@ -87,54 +98,119 @@
 	</div>
 </header>
 
-<main class="page">
+<main class="page pt-[4.5rem] sm:pt-0">
 	<div class="container">
+		<section class=" bg-gray-50 flex flex-col overflow-x-hidden">
+	<div class="swiper main-slider w-full">
+		<div class="swiper-wrapper py-4">
+			<div class="swiper-slide flex flex-col gap-4 items-center">
+	<h3 class="text-3xl font-bold text-center md:text-xl" data-swiper-parallax="-1000">Елегантість часу</h3>
+	<div data-swiper-parallax="-500" class="relative ">
+		<span class="p-2 font-semibold bg-white shadow-lg absolute right-0 top-0">50$</span>
+		<img src=https://unsplash.com/photos/2cFZ_FB08UM/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTQ4MTkxfA&force=true&w=1920 alt="" width="400" height="400" class="w-[400px] h-[400px] mx-auto object-cover">
+	</div>
+	<div class="px-2 flex flex-col h-[8rem] justify-between">
+		<p data-swiper-parallax="-1200" class="max-w-[25rem] line-clamp-3">Чудові часи, що поєднують стиль та функціональність, роблять додатковий акцент на вашому образі.</p>
+		<button data-swiper-parallax="-1000"
+			class="flex items-center gap-1 p-2 border-b border-transparent hover:border-gray-600 mx-auto transition-colors">
+			<span class="font-semibold">Shop now</span>
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+				class="w-6 h-6">
+				<path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+			</svg>
+		</button>
+	</div>
+</div>
+
+			<div class="swiper-slide flex flex-col gap-4 items-center">
+	<h3 class="text-3xl font-bold text-center md:text-xl" data-swiper-parallax="-1000">Літній стиль</h3>
+	<div data-swiper-parallax="-500" class="relative ">
+		<span class="p-2 font-semibold bg-white shadow-lg absolute right-0 top-0">30$</span>
+		<img src=https://unsplash.com/photos/K62u25Jk6vo/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTQ3OTQyfA&force=true&w=1920 alt="" width="400" height="400" class="w-[400px] h-[400px] mx-auto object-cover">
+	</div>
+	<div class="px-2 flex flex-col h-[8rem] justify-between">
+		<p data-swiper-parallax="-1200" class="max-w-[25rem] line-clamp-3">Захист від сонця з неперевершеним стилем та комфортом.</p>
+		<button data-swiper-parallax="-1000"
+			class="flex items-center gap-1 p-2 border-b border-transparent hover:border-gray-600 mx-auto transition-colors">
+			<span class="font-semibold">Shop now</span>
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+				class="w-6 h-6">
+				<path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+			</svg>
+		</button>
+	</div>
+</div>
+
+			<div class="swiper-slide flex flex-col gap-4 items-center">
+	<h3 class="text-3xl font-bold text-center md:text-xl" data-swiper-parallax="-1000">Сяючий поцілунок</h3>
+	<div data-swiper-parallax="-500" class="relative ">
+		<span class="p-2 font-semibold bg-white shadow-lg absolute right-0 top-0">20.50$</span>
+		<img src=https://unsplash.com/photos/E1rH__X9SA0/download?force=true&w=1920 alt="" width="400" height="400" class="w-[400px] h-[400px] mx-auto object-cover">
+	</div>
+	<div class="px-2 flex flex-col h-[8rem] justify-between">
+		<p data-swiper-parallax="-1200" class="max-w-[25rem] line-clamp-3">Збережіть ваші губи чарівно привабливими з нашою губною помадою вишуканого кольору.</p>
+		<button data-swiper-parallax="-1000"
+			class="flex items-center gap-1 p-2 border-b border-transparent hover:border-gray-600 mx-auto transition-colors">
+			<span class="font-semibold">Shop now</span>
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+				class="w-6 h-6">
+				<path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+			</svg>
+		</button>
+	</div>
+</div>
+
+		</div>
+	</div>
+	<div class="main-slider-pagination !w-fit mx-auto py-6 relative z-1"></div>
+</section>
+
 	</div>
 </main>
-<footer class="p-4 grid grid-cols-4 xl:grid-cols-3 md:flex flex-col">
-		<div class="py-4">
-			<h3 class="text-gray-500 py-4 text-xl text-center font-semibold">
-				Партнерам
-			</h3>
-			<ul class="flex items-center gap-4 flex-col py-4">
-				<li><a href="#" class="hover:underline">Продавати на Розетці</a></li>
-				<li><a href="#" class="hover:underline">Співпраця з нами</a></li>
-				<li><a href="#" class="hover:underline">Франчайзинг</a></li>
-				<li><a href="#" class="hover:underline">Оренда приміщень</a></li>
-			</ul>
-		</div>
-		<div class="py-4">
-			<h3 class="text-gray-500  py-4 text-xl text-center font-semibold">
-				Допомога
-			</h3>
-			<ul class="flex items-center gap-4 flex-col py-4">
-				<li><a href="#" class="hover:underline">Доставка та оплата</a></li>
-				<li><a href="#" class="hover:underline">Кредит</a></li>
-				<li><a href="#" class="hover:underline">Гарантія</a></li>
-				<li><a href="#" class="hover:underline">Повернення товару</a></li>
-				<li><a href="#" class="hover:underline">Сервісні центри</a></li>
-				<li><a href="#" class="hover:underline">Сервіси</a></li>
-				<li><a href="#" class="hover:underline">Бонусний рахунок</a></li>
-				<li><a href="#" class="hover:underline">Rozetka Premium</a></li>
-				<li><a href="#" class="hover:underline">Подарункові сертифікати</a></li>
-				<li><a href="#" class="hover:underline">Rozetka Обмін</a></li>
-				<li><a href="#" class="hover:underline">Тури та відпочинок</a></li>
-			</ul>
-		</div>
-		<div class="py-4 ">
-			<h3 class="text-gray-500 py-4 text-xl text-center font-semibold">
-				Інформація про компанію
-			</h3>
-			<ul class="flex items-center gap-4 flex-col py-4">
-				<li><a href="#" class="hover:underline">Про нас</a></li>
-				<li><a href="#" class="hover:underline">Умови використання сайту</a></li>
-				<li><a href="#" class="hover:underline">Контакти</a></li>
-			</ul>
-		</div>
+<footer class="container p-4 grid grid-cols-4 xl:grid-cols-3 md:flex flex-col text-sm sm:pb-[4.5rem]">
+	<div class="py-4">
+		<h3 class="text-gray-500 py-4 text-xl text-center font-semibold">
+			Партнерам
+		</h3>
+		<ul class="flex items-center gap-4 flex-col py-4">
+			<li><a href="#" class="hover:underline">Продавати на Розетці</a></li>
+			<li><a href="#" class="hover:underline">Співпраця з нами</a></li>
+			<li><a href="#" class="hover:underline">Франчайзинг</a></li>
+			<li><a href="#" class="hover:underline">Оренда приміщень</a></li>
+		</ul>
+	</div>
+	<div class="py-4">
+		<h3 class="text-gray-500  py-4 text-xl text-center font-semibold">
+			Допомога
+		</h3>
+		<ul class="flex items-center gap-4 flex-col py-4">
+			<li><a href="#" class="hover:underline">Доставка та оплата</a></li>
+			<li><a href="#" class="hover:underline">Кредит</a></li>
+			<li><a href="#" class="hover:underline">Гарантія</a></li>
+			<li><a href="#" class="hover:underline">Повернення товару</a></li>
+			<li><a href="#" class="hover:underline">Сервісні центри</a></li>
+			<li><a href="#" class="hover:underline">Сервіси</a></li>
+			<li><a href="#" class="hover:underline">Бонусний рахунок</a></li>
+			<li><a href="#" class="hover:underline">Rozetka Premium</a></li>
+			<li><a href="#" class="hover:underline">Подарункові сертифікати</a></li>
+			<li><a href="#" class="hover:underline">Rozetka Обмін</a></li>
+			<li><a href="#" class="hover:underline">Тури та відпочинок</a></li>
+		</ul>
+	</div>
+	<div class="py-4 ">
+		<h3 class="text-gray-500 py-4 text-xl text-center font-semibold">
+			Про компанію
+		</h3>
+		<ul class="flex items-center gap-4 flex-col py-4">
+			<li><a href="#" class="hover:underline">Про нас</a></li>
+			<li><a href="#" class="hover:underline">Умови використання сайту</a></li>
+			<li><a href="#" class="hover:underline">Контакти</a></li>
+		</ul>
+	</div>
 	</div>
 
 	<div class="pt-8 pb-4 flex flex-col items-center gap-4 xl:col-span-3">
-		<img src="/assets/images/logo.png" alt="logo" class="w-40" width="160">
+		<img src="./img/socket.svg" alt="logo" width="100">
 		<div class="text-sm pr-8 my-4 text-center">
 			ТМ використовується на підставі ліцензії правовласника RozetkaLTD.
 		</div>

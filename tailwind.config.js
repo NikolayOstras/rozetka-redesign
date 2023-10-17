@@ -1,8 +1,4 @@
 let colors = {
-	transparent: 'transparent',
-	white: '#ffffff',
-	black: '#000000',
-	mainColor: '#393939',
 	accent: '#36A26B'
 }
 
