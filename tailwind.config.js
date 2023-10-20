@@ -8,7 +8,10 @@ module.exports = {
 	theme: {
 		extend:{
 			colors:colors,
-			backgroundColor: colors
+			backgroundColor: colors,
+			backgroundSize: {
+				'110':'110%',
+			}
 		},
 
 		screens: {
