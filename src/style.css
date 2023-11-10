@@ -20,7 +20,7 @@
 
 @layer components {
 	.container {
-		@apply mx-auto max-w-7xl px-16;
+		@apply mx-auto max-w-7xl px-16 md:px-4;
 	}
 
 	.page {

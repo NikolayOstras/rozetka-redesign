@@ -5638,4 +5638,17 @@
       draggable: true
     }
   });
+  var swiperYoutube = new Swiper(".slider-youtube", {
+    modules: [Scrollbar],
+    loop: true,
+    speed: 600,
+    slidesPerView: "auto",
+    spaceBetween: 20,
+    scrollbar: {
+      enabled: true,
+      el: ".slider-yt-scrollbar",
+      hide: false,
+      draggable: true
+    }
+  });
 })();
