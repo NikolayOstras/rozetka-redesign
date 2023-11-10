@@ -1,8 +1,8 @@
 import Swiper from 'swiper'
-import { Pagination, Parallax, Navigation, EffectFade } from 'swiper/modules'
+import { Pagination, Parallax, Navigation, EffectFade, Scrollbar, Autoplay } from 'swiper/modules'
+// main slider
 const swiper = new Swiper('.main-slider', {
-	modules: [Pagination, Parallax, EffectFade, Navigation],
-	// Optional parameters
+	modules: [Pagination, Parallax, EffectFade, Navigation, Autoplay],
 	loop: true,
 	speed: 600,
 	parallax: true,
@@ -21,5 +21,23 @@ const swiper = new Swiper('.main-slider', {
 		nextEl: '.main-slider-next',
 
 	}
+
+})
+// slider - lg
+const swiperLg = new Swiper('.slider-lg', {
+	modules: [Scrollbar, Autoplay],
+	loop: true,
+	speed: 600,
+	slidesPerView: 'auto',
+	spaceBetween: 20,
+	autoplay: true,
+	scrollbar: {
+		enabled: true,
+		el: '.slider-lg-scrollbar',
+		hide: false,
+		draggable: true
+	}
+
+
 
 })

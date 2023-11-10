@@ -5,15 +5,19 @@
 @tailwind utilities;
 
 @layer base {
-	html , body {
+
+	html,
+	body {
 		@apply h-full;
 		font-family: 'Rubik', sans-serif;
 	}
+
 	body {
 		@apply flex flex-col;
 
 	}
 }
+
 @layer components {
 	.container {
 		@apply mx-auto max-w-7xl px-16;
@@ -22,13 +26,20 @@
 	.page {
 		@apply flex-grow;
 	}
+
 	.main-slider-pagination {
 		@apply flex gap-2;
 	}
+
 	.main-slider-bullet {
 		@apply rounded-full w-2 h-2 bg-accent/20 block transition-colors transition-transform;
 	}
+
 	.main-slider-bullet--active {
 		@apply bg-accent scale-150;
+	}
+
+	.swiper-scrollbar-drag {
+		@apply bg-accent;
 	}
 }

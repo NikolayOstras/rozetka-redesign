@@ -332,6 +332,20 @@
     el.classList.add(...Array.isArray(classes2) ? classes2 : [classes2]);
     return el;
   }
+  function elementOffset(el) {
+    const window2 = getWindow();
+    const document2 = getDocument();
+    const box = el.getBoundingClientRect();
+    const body = document2.body;
+    const clientTop = el.clientTop || body.clientTop || 0;
+    const clientLeft = el.clientLeft || body.clientLeft || 0;
+    const scrollTop = el === window2 ? window2.scrollY : el.scrollTop;
+    const scrollLeft = el === window2 ? window2.scrollX : el.scrollLeft;
+    return {
+      top: box.top + scrollTop - clientTop,
+      left: box.left + scrollLeft - clientLeft
+    };
+  }
   function elementPrevAll(el, selector) {
     const prevEls = [];
     while (el.previousElementSibling) {
@@ -4610,6 +4624,367 @@
     });
   }
 
+  // node_modules/swiper/modules/scrollbar.mjs
+  function Scrollbar(_ref) {
+    let {
+      swiper: swiper2,
+      extendParams,
+      on,
+      emit
+    } = _ref;
+    const document2 = getDocument();
+    let isTouched = false;
+    let timeout = null;
+    let dragTimeout = null;
+    let dragStartPos;
+    let dragSize;
+    let trackSize;
+    let divider;
+    extendParams({
+      scrollbar: {
+        el: null,
+        dragSize: "auto",
+        hide: false,
+        draggable: false,
+        snapOnRelease: true,
+        lockClass: "swiper-scrollbar-lock",
+        dragClass: "swiper-scrollbar-drag",
+        scrollbarDisabledClass: "swiper-scrollbar-disabled",
+        horizontalClass: `swiper-scrollbar-horizontal`,
+        verticalClass: `swiper-scrollbar-vertical`
+      }
+    });
+    swiper2.scrollbar = {
+      el: null,
+      dragEl: null
+    };
+    function setTranslate2() {
+      if (!swiper2.params.scrollbar.el || !swiper2.scrollbar.el)
+        return;
+      const {
+        scrollbar,
+        rtlTranslate: rtl
+      } = swiper2;
+      const {
+        dragEl,
+        el
+      } = scrollbar;
+      const params = swiper2.params.scrollbar;
+      const progress = swiper2.params.loop ? swiper2.progressLoop : swiper2.progress;
+      let newSize = dragSize;
+      let newPos = (trackSize - dragSize) * progress;
+      if (rtl) {
+        newPos = -newPos;
+        if (newPos > 0) {
+          newSize = dragSize - newPos;
+          newPos = 0;
+        } else if (-newPos + dragSize > trackSize) {
+          newSize = trackSize + newPos;
+        }
+      } else if (newPos < 0) {
+        newSize = dragSize + newPos;
+        newPos = 0;
+      } else if (newPos + dragSize > trackSize) {
+        newSize = trackSize - newPos;
+      }
+      if (swiper2.isHorizontal()) {
+        dragEl.style.transform = `translate3d(${newPos}px, 0, 0)`;
+        dragEl.style.width = `${newSize}px`;
+      } else {
+        dragEl.style.transform = `translate3d(0px, ${newPos}px, 0)`;
+        dragEl.style.height = `${newSize}px`;
+      }
+      if (params.hide) {
+        clearTimeout(timeout);
+        el.style.opacity = 1;
+        timeout = setTimeout(() => {
+          el.style.opacity = 0;
+          el.style.transitionDuration = "400ms";
+        }, 1e3);
+      }
+    }
+    function setTransition2(duration) {
+      if (!swiper2.params.scrollbar.el || !swiper2.scrollbar.el)
+        return;
+      swiper2.scrollbar.dragEl.style.transitionDuration = `${duration}ms`;
+    }
+    function updateSize2() {
+      if (!swiper2.params.scrollbar.el || !swiper2.scrollbar.el)
+        return;
+      const {
+        scrollbar
+      } = swiper2;
+      const {
+        dragEl,
+        el
+      } = scrollbar;
+      dragEl.style.width = "";
+      dragEl.style.height = "";
+      trackSize = swiper2.isHorizontal() ? el.offsetWidth : el.offsetHeight;
+      divider = swiper2.size / (swiper2.virtualSize + swiper2.params.slidesOffsetBefore - (swiper2.params.centeredSlides ? swiper2.snapGrid[0] : 0));
+      if (swiper2.params.scrollbar.dragSize === "auto") {
+        dragSize = trackSize * divider;
+      } else {
+        dragSize = parseInt(swiper2.params.scrollbar.dragSize, 10);
+      }
+      if (swiper2.isHorizontal()) {
+        dragEl.style.width = `${dragSize}px`;
+      } else {
+        dragEl.style.height = `${dragSize}px`;
+      }
+      if (divider >= 1) {
+        el.style.display = "none";
+      } else {
+        el.style.display = "";
+      }
+      if (swiper2.params.scrollbar.hide) {
+        el.style.opacity = 0;
+      }
+      if (swiper2.params.watchOverflow && swiper2.enabled) {
+        scrollbar.el.classList[swiper2.isLocked ? "add" : "remove"](swiper2.params.scrollbar.lockClass);
+      }
+    }
+    function getPointerPosition(e) {
+      return swiper2.isHorizontal() ? e.clientX : e.clientY;
+    }
+    function setDragPosition(e) {
+      const {
+        scrollbar,
+        rtlTranslate: rtl
+      } = swiper2;
+      const {
+        el
+      } = scrollbar;
+      let positionRatio;
+      positionRatio = (getPointerPosition(e) - elementOffset(el)[swiper2.isHorizontal() ? "left" : "top"] - (dragStartPos !== null ? dragStartPos : dragSize / 2)) / (trackSize - dragSize);
+      positionRatio = Math.max(Math.min(positionRatio, 1), 0);
+      if (rtl) {
+        positionRatio = 1 - positionRatio;
+      }
+      const position = swiper2.minTranslate() + (swiper2.maxTranslate() - swiper2.minTranslate()) * positionRatio;
+      swiper2.updateProgress(position);
+      swiper2.setTranslate(position);
+      swiper2.updateActiveIndex();
+      swiper2.updateSlidesClasses();
+    }
+    function onDragStart(e) {
+      const params = swiper2.params.scrollbar;
+      const {
+        scrollbar,
+        wrapperEl
+      } = swiper2;
+      const {
+        el,
+        dragEl
+      } = scrollbar;
+      isTouched = true;
+      dragStartPos = e.target === dragEl ? getPointerPosition(e) - e.target.getBoundingClientRect()[swiper2.isHorizontal() ? "left" : "top"] : null;
+      e.preventDefault();
+      e.stopPropagation();
+      wrapperEl.style.transitionDuration = "100ms";
+      dragEl.style.transitionDuration = "100ms";
+      setDragPosition(e);
+      clearTimeout(dragTimeout);
+      el.style.transitionDuration = "0ms";
+      if (params.hide) {
+        el.style.opacity = 1;
+      }
+      if (swiper2.params.cssMode) {
+        swiper2.wrapperEl.style["scroll-snap-type"] = "none";
+      }
+      emit("scrollbarDragStart", e);
+    }
+    function onDragMove(e) {
+      const {
+        scrollbar,
+        wrapperEl
+      } = swiper2;
+      const {
+        el,
+        dragEl
+      } = scrollbar;
+      if (!isTouched)
+        return;
+      if (e.preventDefault)
+        e.preventDefault();
+      else
+        e.returnValue = false;
+      setDragPosition(e);
+      wrapperEl.style.transitionDuration = "0ms";
+      el.style.transitionDuration = "0ms";
+      dragEl.style.transitionDuration = "0ms";
+      emit("scrollbarDragMove", e);
+    }
+    function onDragEnd(e) {
+      const params = swiper2.params.scrollbar;
+      const {
+        scrollbar,
+        wrapperEl
+      } = swiper2;
+      const {
+        el
+      } = scrollbar;
+      if (!isTouched)
+        return;
+      isTouched = false;
+      if (swiper2.params.cssMode) {
+        swiper2.wrapperEl.style["scroll-snap-type"] = "";
+        wrapperEl.style.transitionDuration = "";
+      }
+      if (params.hide) {
+        clearTimeout(dragTimeout);
+        dragTimeout = nextTick(() => {
+          el.style.opacity = 0;
+          el.style.transitionDuration = "400ms";
+        }, 1e3);
+      }
+      emit("scrollbarDragEnd", e);
+      if (params.snapOnRelease) {
+        swiper2.slideToClosest();
+      }
+    }
+    function events2(method) {
+      const {
+        scrollbar,
+        params
+      } = swiper2;
+      const el = scrollbar.el;
+      if (!el)
+        return;
+      const target = el;
+      const activeListener = params.passiveListeners ? {
+        passive: false,
+        capture: false
+      } : false;
+      const passiveListener = params.passiveListeners ? {
+        passive: true,
+        capture: false
+      } : false;
+      if (!target)
+        return;
+      const eventMethod = method === "on" ? "addEventListener" : "removeEventListener";
+      target[eventMethod]("pointerdown", onDragStart, activeListener);
+      document2[eventMethod]("pointermove", onDragMove, activeListener);
+      document2[eventMethod]("pointerup", onDragEnd, passiveListener);
+    }
+    function enableDraggable() {
+      if (!swiper2.params.scrollbar.el || !swiper2.scrollbar.el)
+        return;
+      events2("on");
+    }
+    function disableDraggable() {
+      if (!swiper2.params.scrollbar.el || !swiper2.scrollbar.el)
+        return;
+      events2("off");
+    }
+    function init() {
+      const {
+        scrollbar,
+        el: swiperEl
+      } = swiper2;
+      swiper2.params.scrollbar = createElementIfNotDefined(swiper2, swiper2.originalParams.scrollbar, swiper2.params.scrollbar, {
+        el: "swiper-scrollbar"
+      });
+      const params = swiper2.params.scrollbar;
+      if (!params.el)
+        return;
+      let el;
+      if (typeof params.el === "string" && swiper2.isElement) {
+        el = swiper2.el.querySelector(params.el);
+      }
+      if (!el && typeof params.el === "string") {
+        el = document2.querySelectorAll(params.el);
+      } else if (!el) {
+        el = params.el;
+      }
+      if (swiper2.params.uniqueNavElements && typeof params.el === "string" && el.length > 1 && swiperEl.querySelectorAll(params.el).length === 1) {
+        el = swiperEl.querySelector(params.el);
+      }
+      if (el.length > 0)
+        el = el[0];
+      el.classList.add(swiper2.isHorizontal() ? params.horizontalClass : params.verticalClass);
+      let dragEl;
+      if (el) {
+        dragEl = el.querySelector(`.${swiper2.params.scrollbar.dragClass}`);
+        if (!dragEl) {
+          dragEl = createElement("div", swiper2.params.scrollbar.dragClass);
+          el.append(dragEl);
+        }
+      }
+      Object.assign(scrollbar, {
+        el,
+        dragEl
+      });
+      if (params.draggable) {
+        enableDraggable();
+      }
+      if (el) {
+        el.classList[swiper2.enabled ? "remove" : "add"](swiper2.params.scrollbar.lockClass);
+      }
+    }
+    function destroy() {
+      const params = swiper2.params.scrollbar;
+      const el = swiper2.scrollbar.el;
+      if (el) {
+        el.classList.remove(swiper2.isHorizontal() ? params.horizontalClass : params.verticalClass);
+      }
+      disableDraggable();
+    }
+    on("init", () => {
+      if (swiper2.params.scrollbar.enabled === false) {
+        disable();
+      } else {
+        init();
+        updateSize2();
+        setTranslate2();
+      }
+    });
+    on("update resize observerUpdate lock unlock", () => {
+      updateSize2();
+    });
+    on("setTranslate", () => {
+      setTranslate2();
+    });
+    on("setTransition", (_s, duration) => {
+      setTransition2(duration);
+    });
+    on("enable disable", () => {
+      const {
+        el
+      } = swiper2.scrollbar;
+      if (el) {
+        el.classList[swiper2.enabled ? "remove" : "add"](swiper2.params.scrollbar.lockClass);
+      }
+    });
+    on("destroy", () => {
+      destroy();
+    });
+    const enable = () => {
+      swiper2.el.classList.remove(swiper2.params.scrollbar.scrollbarDisabledClass);
+      if (swiper2.scrollbar.el) {
+        swiper2.scrollbar.el.classList.remove(swiper2.params.scrollbar.scrollbarDisabledClass);
+      }
+      init();
+      updateSize2();
+      setTranslate2();
+    };
+    const disable = () => {
+      swiper2.el.classList.add(swiper2.params.scrollbar.scrollbarDisabledClass);
+      if (swiper2.scrollbar.el) {
+        swiper2.scrollbar.el.classList.add(swiper2.params.scrollbar.scrollbarDisabledClass);
+      }
+      destroy();
+    };
+    Object.assign(swiper2.scrollbar, {
+      enable,
+      disable,
+      updateSize: updateSize2,
+      setTranslate: setTranslate2,
+      init,
+      destroy
+    });
+  }
+
   // node_modules/swiper/modules/parallax.mjs
   function Parallax(_ref) {
     let {
@@ -4734,6 +5109,303 @@
       if (!swiper2.params.parallax.enabled)
         return;
       setTransition2(duration);
+    });
+  }
+
+  // node_modules/swiper/modules/autoplay.mjs
+  function Autoplay(_ref) {
+    let {
+      swiper: swiper2,
+      extendParams,
+      on,
+      emit,
+      params
+    } = _ref;
+    swiper2.autoplay = {
+      running: false,
+      paused: false,
+      timeLeft: 0
+    };
+    extendParams({
+      autoplay: {
+        enabled: false,
+        delay: 3e3,
+        waitForTransition: true,
+        disableOnInteraction: true,
+        stopOnLastSlide: false,
+        reverseDirection: false,
+        pauseOnMouseEnter: false
+      }
+    });
+    let timeout;
+    let raf;
+    let autoplayDelayTotal = params && params.autoplay ? params.autoplay.delay : 3e3;
+    let autoplayDelayCurrent = params && params.autoplay ? params.autoplay.delay : 3e3;
+    let autoplayTimeLeft;
+    let autoplayStartTime = new Date().getTime;
+    let wasPaused;
+    let isTouched;
+    let pausedByTouch;
+    let touchStartTimeout;
+    let slideChanged;
+    let pausedByInteraction;
+    function onTransitionEnd(e) {
+      if (!swiper2 || swiper2.destroyed || !swiper2.wrapperEl)
+        return;
+      if (e.target !== swiper2.wrapperEl)
+        return;
+      swiper2.wrapperEl.removeEventListener("transitionend", onTransitionEnd);
+      resume();
+    }
+    const calcTimeLeft = () => {
+      if (swiper2.destroyed || !swiper2.autoplay.running)
+        return;
+      if (swiper2.autoplay.paused) {
+        wasPaused = true;
+      } else if (wasPaused) {
+        autoplayDelayCurrent = autoplayTimeLeft;
+        wasPaused = false;
+      }
+      const timeLeft = swiper2.autoplay.paused ? autoplayTimeLeft : autoplayStartTime + autoplayDelayCurrent - new Date().getTime();
+      swiper2.autoplay.timeLeft = timeLeft;
+      emit("autoplayTimeLeft", timeLeft, timeLeft / autoplayDelayTotal);
+      raf = requestAnimationFrame(() => {
+        calcTimeLeft();
+      });
+    };
+    const getSlideDelay = () => {
+      let activeSlideEl;
+      if (swiper2.virtual && swiper2.params.virtual.enabled) {
+        activeSlideEl = swiper2.slides.filter((slideEl) => slideEl.classList.contains("swiper-slide-active"))[0];
+      } else {
+        activeSlideEl = swiper2.slides[swiper2.activeIndex];
+      }
+      if (!activeSlideEl)
+        return void 0;
+      const currentSlideDelay = parseInt(activeSlideEl.getAttribute("data-swiper-autoplay"), 10);
+      return currentSlideDelay;
+    };
+    const run = (delayForce) => {
+      if (swiper2.destroyed || !swiper2.autoplay.running)
+        return;
+      cancelAnimationFrame(raf);
+      calcTimeLeft();
+      let delay = typeof delayForce === "undefined" ? swiper2.params.autoplay.delay : delayForce;
+      autoplayDelayTotal = swiper2.params.autoplay.delay;
+      autoplayDelayCurrent = swiper2.params.autoplay.delay;
+      const currentSlideDelay = getSlideDelay();
+      if (!Number.isNaN(currentSlideDelay) && currentSlideDelay > 0 && typeof delayForce === "undefined") {
+        delay = currentSlideDelay;
+        autoplayDelayTotal = currentSlideDelay;
+        autoplayDelayCurrent = currentSlideDelay;
+      }
+      autoplayTimeLeft = delay;
+      const speed = swiper2.params.speed;
+      const proceed = () => {
+        if (!swiper2 || swiper2.destroyed)
+          return;
+        if (swiper2.params.autoplay.reverseDirection) {
+          if (!swiper2.isBeginning || swiper2.params.loop || swiper2.params.rewind) {
+            swiper2.slidePrev(speed, true, true);
+            emit("autoplay");
+          } else if (!swiper2.params.autoplay.stopOnLastSlide) {
+            swiper2.slideTo(swiper2.slides.length - 1, speed, true, true);
+            emit("autoplay");
+          }
+        } else {
+          if (!swiper2.isEnd || swiper2.params.loop || swiper2.params.rewind) {
+            swiper2.slideNext(speed, true, true);
+            emit("autoplay");
+          } else if (!swiper2.params.autoplay.stopOnLastSlide) {
+            swiper2.slideTo(0, speed, true, true);
+            emit("autoplay");
+          }
+        }
+        if (swiper2.params.cssMode) {
+          autoplayStartTime = new Date().getTime();
+          requestAnimationFrame(() => {
+            run();
+          });
+        }
+      };
+      if (delay > 0) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          proceed();
+        }, delay);
+      } else {
+        requestAnimationFrame(() => {
+          proceed();
+        });
+      }
+      return delay;
+    };
+    const start = () => {
+      swiper2.autoplay.running = true;
+      run();
+      emit("autoplayStart");
+    };
+    const stop = () => {
+      swiper2.autoplay.running = false;
+      clearTimeout(timeout);
+      cancelAnimationFrame(raf);
+      emit("autoplayStop");
+    };
+    const pause = (internal, reset) => {
+      if (swiper2.destroyed || !swiper2.autoplay.running)
+        return;
+      clearTimeout(timeout);
+      if (!internal) {
+        pausedByInteraction = true;
+      }
+      const proceed = () => {
+        emit("autoplayPause");
+        if (swiper2.params.autoplay.waitForTransition) {
+          swiper2.wrapperEl.addEventListener("transitionend", onTransitionEnd);
+        } else {
+          resume();
+        }
+      };
+      swiper2.autoplay.paused = true;
+      if (reset) {
+        if (slideChanged) {
+          autoplayTimeLeft = swiper2.params.autoplay.delay;
+        }
+        slideChanged = false;
+        proceed();
+        return;
+      }
+      const delay = autoplayTimeLeft || swiper2.params.autoplay.delay;
+      autoplayTimeLeft = delay - (new Date().getTime() - autoplayStartTime);
+      if (swiper2.isEnd && autoplayTimeLeft < 0 && !swiper2.params.loop)
+        return;
+      if (autoplayTimeLeft < 0)
+        autoplayTimeLeft = 0;
+      proceed();
+    };
+    const resume = () => {
+      if (swiper2.isEnd && autoplayTimeLeft < 0 && !swiper2.params.loop || swiper2.destroyed || !swiper2.autoplay.running)
+        return;
+      autoplayStartTime = new Date().getTime();
+      if (pausedByInteraction) {
+        pausedByInteraction = false;
+        run(autoplayTimeLeft);
+      } else {
+        run();
+      }
+      swiper2.autoplay.paused = false;
+      emit("autoplayResume");
+    };
+    const onVisibilityChange = () => {
+      if (swiper2.destroyed || !swiper2.autoplay.running)
+        return;
+      const document2 = getDocument();
+      if (document2.visibilityState === "hidden") {
+        pausedByInteraction = true;
+        pause(true);
+      }
+      if (document2.visibilityState === "visible") {
+        resume();
+      }
+    };
+    const onPointerEnter = (e) => {
+      if (e.pointerType !== "mouse")
+        return;
+      pausedByInteraction = true;
+      if (swiper2.animating || swiper2.autoplay.paused)
+        return;
+      pause(true);
+    };
+    const onPointerLeave = (e) => {
+      if (e.pointerType !== "mouse")
+        return;
+      if (swiper2.autoplay.paused) {
+        resume();
+      }
+    };
+    const attachMouseEvents = () => {
+      if (swiper2.params.autoplay.pauseOnMouseEnter) {
+        swiper2.el.addEventListener("pointerenter", onPointerEnter);
+        swiper2.el.addEventListener("pointerleave", onPointerLeave);
+      }
+    };
+    const detachMouseEvents = () => {
+      swiper2.el.removeEventListener("pointerenter", onPointerEnter);
+      swiper2.el.removeEventListener("pointerleave", onPointerLeave);
+    };
+    const attachDocumentEvents = () => {
+      const document2 = getDocument();
+      document2.addEventListener("visibilitychange", onVisibilityChange);
+    };
+    const detachDocumentEvents = () => {
+      const document2 = getDocument();
+      document2.removeEventListener("visibilitychange", onVisibilityChange);
+    };
+    on("init", () => {
+      if (swiper2.params.autoplay.enabled) {
+        attachMouseEvents();
+        attachDocumentEvents();
+        autoplayStartTime = new Date().getTime();
+        start();
+      }
+    });
+    on("destroy", () => {
+      detachMouseEvents();
+      detachDocumentEvents();
+      if (swiper2.autoplay.running) {
+        stop();
+      }
+    });
+    on("beforeTransitionStart", (_s, speed, internal) => {
+      if (swiper2.destroyed || !swiper2.autoplay.running)
+        return;
+      if (internal || !swiper2.params.autoplay.disableOnInteraction) {
+        pause(true, true);
+      } else {
+        stop();
+      }
+    });
+    on("sliderFirstMove", () => {
+      if (swiper2.destroyed || !swiper2.autoplay.running)
+        return;
+      if (swiper2.params.autoplay.disableOnInteraction) {
+        stop();
+        return;
+      }
+      isTouched = true;
+      pausedByTouch = false;
+      pausedByInteraction = false;
+      touchStartTimeout = setTimeout(() => {
+        pausedByInteraction = true;
+        pausedByTouch = true;
+        pause(true);
+      }, 200);
+    });
+    on("touchEnd", () => {
+      if (swiper2.destroyed || !swiper2.autoplay.running || !isTouched)
+        return;
+      clearTimeout(touchStartTimeout);
+      clearTimeout(timeout);
+      if (swiper2.params.autoplay.disableOnInteraction) {
+        pausedByTouch = false;
+        isTouched = false;
+        return;
+      }
+      if (pausedByTouch && swiper2.params.cssMode)
+        resume();
+      pausedByTouch = false;
+      isTouched = false;
+    });
+    on("slideChange", () => {
+      if (swiper2.destroyed || !swiper2.autoplay.running)
+        return;
+      slideChanged = true;
+    });
+    Object.assign(swiper2.autoplay, {
+      start,
+      stop,
+      pause,
+      resume
     });
   }
 
@@ -4920,7 +5592,7 @@
 
   // src/app.js
   var swiper = new Swiper(".main-slider", {
-    modules: [Pagination, Parallax, EffectFade, Navigation],
+    modules: [Pagination, Parallax, EffectFade, Navigation, Autoplay],
     loop: true,
     speed: 600,
     parallax: true,
@@ -4936,6 +5608,20 @@
       enabled: true,
       prevEl: ".main-slider-prev",
       nextEl: ".main-slider-next"
+    }
+  });
+  var swiperLg = new Swiper(".slider-lg", {
+    modules: [Scrollbar, Autoplay],
+    loop: true,
+    speed: 600,
+    slidesPerView: "auto",
+    spaceBetween: 20,
+    autoplay: true,
+    scrollbar: {
+      enabled: true,
+      el: ".slider-lg-scrollbar",
+      hide: false,
+      draggable: true
     }
   });
 })();
