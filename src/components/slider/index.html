@@ -1,16 +1,32 @@
 <section class=" bg-gray-50 flex flex-col overflow-x-hidden">
 	<div class="container">
+
 		<div class="swiper main-slider w-full">
-			<div class="swiper-wrapper py-4">
+
+			<div class="swiper-wrapper py-4 relative">
+				<button class="main-slider-prev z-1 absolute left-4 top-1/2 bg-white/50 backdrop-blur-lg p-4 rounded-full">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+						stroke="currentColor" class="w-6 h-6">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+					</svg>
+
+				</button>
+				<button class="main-slider-next z-1 absolute right-4 top-1/2 bg-white/50 backdrop-blur-lg p-4 rounded-full">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+						stroke="currentColor" class="w-6 h-6">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+					</svg>
+
+				</button>
 				@@include('./components/slide/index.html',{
 				"title":"Елегантість часу",
-				"img":"https://unsplash.com/photos/2cFZ_FB08UM/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTQ4MTkxfA&force=true&w=1920",
+				"img":"https://unsplash.com/photos/DhiZ2ZUQSS4/download?ixid=M3wxMjA3fDB8MXxzZWFyY2h8MjJ8fHdhdGNoZXN8ZW58MHx8fHwxNjk5NjMyODQ4fDA&force=true&w=1920",
 				"price": "50$",
 				"description": "Чудові часи, що поєднують стиль та функціональність, роблять додатковий акцент на вашому образі"
 				})
 				@@include('./components/slide/index.html',{
 				"title":"Літній стиль",
-				"img":"https://unsplash.com/photos/K62u25Jk6vo/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTQ3OTQyfA&force=true&w=1920",
+				"img":"https://unsplash.com/photos/tzA2MfnYSb0/download?ixid=M3wxMjA3fDB8MXxzZWFyY2h8M3x8c3VuJTIwZ2xhc3Nlc3xlbnwwfHx8fDE2OTk2MzI5MjR8MA&force=true&w=1920",
 				"price": "30$",
 				"description": "Захист від сонця з неперевершеним стилем та комфортом."
 				})
