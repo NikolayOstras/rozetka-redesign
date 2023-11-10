@@ -41,3 +41,21 @@ const swiperLg = new Swiper('.slider-lg', {
 
 
 })
+// slider - md
+const swiperMd = new Swiper('.slider-md', {
+	modules: [Scrollbar, Autoplay],
+	loop: true,
+	speed: 600,
+	slidesPerView: 'auto',
+	spaceBetween: 20,
+	autoplay: true,
+	scrollbar: {
+		enabled: true,
+		el: '.slider-md-scrollbar',
+		hide: false,
+		draggable: true
+	}
+
+
+
+})
