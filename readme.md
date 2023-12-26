@@ -1,1 +1,1 @@
-npx tailwindcss -i src/style.css -o build/css/style.css --watch
+https://nikolayostras.github.io/rozetka-redesign/
