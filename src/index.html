@@ -1,212 +1,65 @@
-@@include('./static/header.html')
-@@include('./components/header/index.html')
+@@include('./static/header.html') @@include('./components/header/index.html')
 <main class="page pt-[4.5rem] sm:pt-0">
 	@@include('./components/slider/index.html')
 	<div class="container">
 		<section>
-			<div class="mt-4">@@include('./components/block-title/index.html',{"title":"Last viewed"})</div>
+			<div class="mt-4">
+				@@include('./components/block-title/index.html',{"title":"Last viewed"})
+			</div>
 			<div
-				class="grid grid-cols-4 gap-x-2 gap-y-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 place-items-center mt-4">
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
+				class="grid grid-cols-4 gap-x-2 gap-y-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 place-items-center mt-4"
+			>
+				@@loop('./components/card/index.html','../data.json')
 			</div>
 		</section>
 		<section>
 			<div class="mt-4">
-				@@include('./components/block-title/index.html',{"title":"More products to buy"})
+				@@include('./components/block-title/index.html',
+				{"title":"More products to buy"})
 			</div>
+			<div class="mt-4">@@include('./components/slider-lg/index.html')</div>
+		</section>
+		<section>
 			<div class="mt-4">
-				@@include('./components/slider-lg/index.html')
+				@@include('./components/block-title/index.html',{"title":"Hot new"})
+			</div>
+			<div
+				class="grid grid-cols-4 gap-x-2 gap-y-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 place-items-center mt-4"
+			>
+				@@loop('./components/card/index.html','../data.json)
 			</div>
 		</section>
+		<section class="mt-8">@@include('./components/banner/index.html')</section>
 		<section>
-			<div class="mt-4">@@include('./components/block-title/index.html',{"title":"Hot new"})</div>
-			<div
-				class="grid grid-cols-4 gap-x-2 gap-y-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 place-items-center mt-4">
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
+			<div class="mt-4">
+				@@include('./components/block-title/index.html',{"title":"Most wished"})
 			</div>
-		</section>
-		<section class="mt-8">
-			@@include('./components/banner/index.html')
-		</section>
-		<section>
-			<div class="mt-4">@@include('./components/block-title/index.html',{"title":"Most wished"})</div>
 			<div
-				class="grid grid-cols-4 gap-x-2 gap-y-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 place-items-center mt-4">
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
+				class="grid grid-cols-4 gap-x-2 gap-y-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 place-items-center mt-4"
+			>
+				@@loop('./components/card/index.html','../data.json')
 			</div>
 		</section>
 		<section class="mt-4">
 			<div class="mt-4">
-				@@include('./components/block-title/index.html',{"title":"New videos on youtube"})
-				@@include('./components/slider-youtube/index.html')
+				@@include('./components/block-title/index.html',
+				{"title":"New videos on	youtube"})
+				 @@include('./components/slider-youtube/index.html')
 			</div>
 		</section>
 		<section class="mt-4">
 			<div class="mt-4">
-				@@include('./components/block-title/index.html',{"title":"Only on Rozetka"})
+				@@include('./components/block-title/index.html',
+				{"title":"Only on Rozetka"}) 
 				@@include('./components/slider-md/index.html')
 			</div>
 		</section>
 		<section>
-			<div class="mt-4">@@include('./components/block-title/index.html',{"title":"Top"})</div>
+			<div class="mt-4">
+				@@include('./components/block-title/index.html',{"title":"Top"})
+			</div>
 			<div class="flex flex-wrap gap-4 mt-4 justify-center">
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
-				@@include('./components/card/index.html',{
-				"title":"Спортивна сила Nike",
-				"price":"1499$",
-				"img":"https://unsplash.com/photos/164_6wVEHfI/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk3NTU5MjYyfA&force=true&w=1920",
-				"category":"Кросівки для активного спорту",
-				"rating":"4.2",
-				"reviews":"32"
-				})
+				@@loop('./components/card/index.html','../data.json)
 			</div>
 		</section>
 	</div>

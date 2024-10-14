@@ -1,13 +1,22 @@
-import Swiper from 'swiper'
-import { Pagination, Parallax, Navigation, EffectFade, Scrollbar, Autoplay } from 'swiper/modules'
+import Swiper from 'swiper';
+import { Autoplay, EffectFade, Navigation, Pagination, Parallax, Scrollbar } from 'swiper/modules';
 // main slider
 const swiper = new Swiper('.main-slider', {
 	modules: [Pagination, Parallax, EffectFade, Navigation, Autoplay],
 	loop: true,
 	speed: 600,
-	parallax: true,
+	// parallax: true,
 	effect: 'fade',
 	autoplay: true,
+	centeredSlides: true,
+	slidesPerView: 3,
+	// breakpoints: {
+	// 	// when window width is >= 768px
+	// 	768: {
+	// 		slidesPerView: 3,
+	// 		spaceBetween: 10
+	// 	}
+	// },
 
 	pagination: {
 		el: '.main-slider-pagination',
@@ -18,11 +27,9 @@ const swiper = new Swiper('.main-slider', {
 	navigation: {
 		enabled: true,
 		prevEl: '.main-slider-prev',
-		nextEl: '.main-slider-next',
-
+		nextEl: '.main-slider-next'
 	}
-
-})
+});
 // slider - lg
 const swiperLg = new Swiper('.slider-lg', {
 	modules: [Scrollbar, Autoplay],
@@ -37,10 +44,7 @@ const swiperLg = new Swiper('.slider-lg', {
 		hide: false,
 		draggable: true
 	}
-
-
-
-})
+});
 // slider - md
 const swiperMd = new Swiper('.slider-md', {
 	modules: [Scrollbar, Autoplay],
@@ -55,10 +59,7 @@ const swiperMd = new Swiper('.slider-md', {
 		hide: false,
 		draggable: true
 	}
-
-
-
-})
+});
 
 // slider - md
 const swiperYoutube = new Swiper('.slider-youtube', {
@@ -73,7 +74,4 @@ const swiperYoutube = new Swiper('.slider-youtube', {
 		hide: false,
 		draggable: true
 	}
-
-
-
-})
+});

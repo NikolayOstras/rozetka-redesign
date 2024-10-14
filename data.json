@@ -1,0 +1,34 @@
+[
+	{
+		"title": "Спортивна сила Nike",
+		"price": "1499$",
+		"img": "https://placehold.co/600x400/EEE/31343C",
+		"category": "Кросівки для активного спорту",
+		"rating": "4.2",
+		"reviews": "32"
+	},
+	{
+		"title": "Оригінальні дерев'яні годинники Maple Wood",
+		"price": "99$",
+		"img": "https://placehold.co/600x400/EEE/31343C",
+		"category": "Аксесуари",
+		"rating": "4.8",
+		"reviews": "112"
+	},
+	{
+		"title": "Елегантний шкіряний блокнот Vintage",
+		"price": "39$",
+		"img": "https://placehold.co/600x400/EEE/31343C",
+		"category": "Канцелярія",
+		"rating": "4.6",
+		"reviews": "84"
+	},
+	{
+		"title": "Смарт-годинник Fitbit Versa 3",
+		"price": "199$",
+		"img": "https://placehold.co/600x400/EEE/31343C",
+		"category": "Електроніка",
+		"rating": "4.7",
+		"reviews": "142"
+	}
+]

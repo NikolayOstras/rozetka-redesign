@@ -12,7 +12,6 @@
 		"prettier": "^3.0.3"
 	},
 	"dependencies": {
-		"smooth-scrollbar": "^8.8.4",
 		"swiper": "^10.3.1"
 	}
 }

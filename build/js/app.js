@@ -5595,9 +5595,10 @@
     modules: [Pagination, Parallax, EffectFade, Navigation, Autoplay],
     loop: true,
     speed: 600,
-    parallax: true,
     effect: "fade",
     autoplay: true,
+    centeredSlides: true,
+    slidesPerView: 3,
     pagination: {
       el: ".main-slider-pagination",
       clickable: true,
