@@ -5,7 +5,6 @@
 @tailwind utilities;
 
 @layer base {
-
 	html,
 	body {
 		@apply h-full;
@@ -14,7 +13,6 @@
 
 	body {
 		@apply flex flex-col;
-
 	}
 }
 

@@ -1,15 +1,13 @@
 import Swiper from 'swiper';
-import { Autoplay, EffectFade, Navigation, Pagination, Parallax, Scrollbar } from 'swiper/modules';
+import { Autoplay, Pagination, Scrollbar } from 'swiper/modules';
 // main slider
-const swiper = new Swiper('.main-slider', {
-	modules: [Pagination, Parallax, EffectFade, Navigation, Autoplay],
+const swiper = new Swiper('.swiper', {
+	modules: [Pagination, Autoplay],
 	loop: true,
 	speed: 600,
-	// parallax: true,
-	effect: 'fade',
 	autoplay: true,
-	centeredSlides: true,
-	slidesPerView: 3,
+	slidesPerView: 1,
+
 	// breakpoints: {
 	// 	// when window width is >= 768px
 	// 	768: {
@@ -23,11 +21,6 @@ const swiper = new Swiper('.main-slider', {
 		clickable: true,
 		bulletClass: 'main-slider-bullet',
 		bulletActiveClass: 'main-slider-bullet--active'
-	},
-	navigation: {
-		enabled: true,
-		prevEl: '.main-slider-prev',
-		nextEl: '.main-slider-next'
 	}
 });
 // slider - lg
